@@ -4,7 +4,9 @@ import Contacts, {
   action as contactsAction,
   loader as contactsLoader,
 } from "./pages/Contacts"
-import Contact from "./pages/Contact"
+import ContactRead, {
+  loader as contactReadLoader,
+} from "./pages/ContactRead"
 import NavigationError from "./pages/NavigationError"
 import Login from "./pages/Login"
 
@@ -26,8 +28,9 @@ function Router() {
       action: contactsAction,
       children: [
         {
-          path: ":id",
-          element: <Contact />,
+          path: ":contactId",
+          element: <ContactRead />,
+          loader: contactReadLoader as any,
         }
       ]
     }

@@ -1,16 +1,14 @@
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 import { Contact as IContact } from "../types/client";
+import { getContact } from "../api/contacts";
+
+export async function loader({ params }: { params: { contactId: string } }) {
+  const contact = await getContact(params.contactId);
+  return { contact };
+}
 
 function Contact() {
-  const contact: IContact = {
-    id: "1234",
-    first: "Your",
-    last: "Name",
-    avatar: "https://robohash.org/you.png?size=200x200",
-    twitter: "your_handle",
-    notes: "Some notes",
-    favorite: true,
-  };
+  const { contact } = useLoaderData() as { contact: IContact };
 
   return (
     <div id="contact">
