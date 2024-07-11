@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Root from "./pages/Root"
-import Login from "./pages/Login"
-import NavigationError from "./pages/NavigationError"
+import Contacts, { loader as contactsLoader } from "./pages/Contacts"
 import Contact from "./pages/Contact"
+import NavigationError from "./pages/NavigationError"
+import Login from "./pages/Login"
 
 function Router() {
   const router = createBrowserRouter([
@@ -12,12 +13,13 @@ function Router() {
       errorElement: <NavigationError />
     },
     {
-      path: "login",
+      path: "/login",
       element: <Login />,
     },
     {
-      path: "contacts",
-      element: <Contact />,
+      path: "/contacts",
+      element: <Contacts />,
+      loader: contactsLoader,
       children: [
         {
           path: ":id",
