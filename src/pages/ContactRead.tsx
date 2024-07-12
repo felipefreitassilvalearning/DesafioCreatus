@@ -1,10 +1,17 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useFetcher, useLoaderData } from "react-router-dom";
 import { Contact as IContact } from "../types/client";
-import { getContact } from "../api/contacts";
+import { getContact, updateContact } from "../api/contacts";
 
 export async function loader({ params }: { params: { contactId: string } }) {
   const contact = await getContact(params.contactId);
   return { contact };
+}
+
+export async function action({ request, params }: { request: Request; params: { contactId: string } }) {
+  const formData = await request.formData();
+  return updateContact(params.contactId, {
+    favorite: formData.get("favorite") === "true"
+  });
 }
 
 function Contact() {
@@ -73,9 +80,11 @@ function Contact() {
 }
 
 function Favorite({ contact }: { contact: IContact }) {
+  const fetcher = useFetcher()
   const favorite = contact.favorite;
+
   return (
-    <Form method="post">
+    <fetcher.Form method="post">
       <button
         name="favorite"
         value={favorite ? "false" : "true"}
@@ -87,7 +96,7 @@ function Favorite({ contact }: { contact: IContact }) {
       >
         {favorite ? "★" : "☆"}
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }
 

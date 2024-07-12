@@ -5,6 +5,7 @@ import Contacts, {
   loader as contactsLoader,
 } from "./pages/Contacts"
 import ContactRead, {
+  action as contactReadAction,
   loader as contactReadLoader,
 } from "./pages/ContactRead"
 import ContactEdit, {
@@ -43,6 +44,7 @@ function Router() {
           path: ":contactId",
           element: <ContactRead />,
           loader: contactReadLoader as any,
+          action: contactReadAction as any,
         },
         {
           path: ":contactId/edit",

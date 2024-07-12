@@ -79,15 +79,21 @@ export async function getContact(id: string): Promise<Contact> {
     }
 }
 
-export async function updateContact(id: string, contact: Contact): Promise<Contact> {
+export async function updateContact(id: string, contact: Partial<Contact>): Promise<Contact> {
     try {
         const contacts = loadContacts()
         const index = contacts.findIndex((contact) => contact.id === id)
         if (index === -1) {
             throw new Error("Contact not found")
         }
-        contact.id = id
-        contacts[index] = contact
+        const existingContact = contacts[index]
+        for (const key_ in contact) {
+            const key = key_ as keyof Contact
+            if (contact[key] !== undefined) {
+                existingContact[key] = contact[key]
+            }
+        }
+        contacts[index] = existingContact
         saveContacts()
         return contact
     } catch (error) {
