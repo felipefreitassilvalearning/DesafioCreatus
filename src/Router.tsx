@@ -7,6 +7,10 @@ import Contacts, {
 import ContactRead, {
   loader as contactReadLoader,
 } from "./pages/ContactRead"
+import ContactEdit, {
+  action as contactEditAction,
+  loader as contactEditLoader,
+} from "./pages/ContactEdit"
 import NavigationError from "./pages/NavigationError"
 import Login from "./pages/Login"
 
@@ -31,6 +35,12 @@ function Router() {
           path: ":contactId",
           element: <ContactRead />,
           loader: contactReadLoader as any,
+        },
+        {
+          path: ":contactId/edit",
+          element: <ContactEdit />,
+          loader: contactEditLoader as any,
+          action: contactEditAction as any,
         }
       ]
     }
