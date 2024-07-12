@@ -51,8 +51,19 @@ export async function createContact(contact?: Contact): Promise<Contact> {
     return contact;
 }
 
-export async function getContacts(): Promise<Contact[]> {
-    return loadContacts()
+export async function getContacts(query: string | null): Promise<Contact[]> {
+    try {
+        const contacts = loadContacts()
+        if (query) {
+            return contacts.filter((contact) => {
+                return contact.first.toLowerCase().includes(query.toLowerCase()) ||
+                    contact.last.toLowerCase().includes(query.toLowerCase())
+            })
+        }
+        return contacts
+    } catch (error) {
+        throw new Error("Contacts not found: " + error)
+    }
 }
 
 export async function getContact(id: string): Promise<Contact> {
