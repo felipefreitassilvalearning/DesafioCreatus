@@ -11,6 +11,9 @@ import ContactEdit, {
   action as contactEditAction,
   loader as contactEditLoader,
 } from "./pages/ContactEdit"
+import ContactDelete, {
+  action as contactDeleteAction,
+} from "./pages/ContactDelete"
 import NavigationError from "./pages/NavigationError"
 import Login from "./pages/Login"
 
@@ -28,9 +31,14 @@ function Router() {
     {
       path: "/contacts",
       element: <Contacts />,
+      errorElement: <NavigationError />,
       loader: contactsLoader,
       action: contactsAction,
       children: [
+        {
+          index: true,
+          element: <p>Select a contact</p>,
+        },
         {
           path: ":contactId",
           element: <ContactRead />,
@@ -41,6 +49,12 @@ function Router() {
           element: <ContactEdit />,
           loader: contactEditLoader as any,
           action: contactEditAction as any,
+        },
+        {
+          path: ":contactId/destroy",
+          element: <ContactDelete />,
+          action: contactDeleteAction as any,
+          errorElement: <div>Oops! There was an error.</div>
         }
       ]
     }

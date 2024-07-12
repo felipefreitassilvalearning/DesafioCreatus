@@ -83,3 +83,17 @@ export async function updateContact(id: string, contact: Contact): Promise<Conta
         throw new Error("Contact not found: " + error)
     }
 }
+
+export async function deleteContact(id: string): Promise<void> {
+    try {
+        const contacts = loadContacts()
+        const index = contacts.findIndex((contact) => contact.id === id)
+        if (index === -1) {
+            throw new Error("Contact not found")
+        }
+        contacts.splice(index, 1)
+        saveContacts()
+    } catch (error) {
+        throw new Error("Contact not found: " + error)
+    }
+}
