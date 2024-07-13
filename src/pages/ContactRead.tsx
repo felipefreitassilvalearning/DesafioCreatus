@@ -4,6 +4,12 @@ import { getContact, updateContact } from "../api/contacts";
 
 export async function loader({ params }: { params: { contactId: string } }) {
   const contact = await getContact(params.contactId);
+  if (!contact) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
   return { contact };
 }
 

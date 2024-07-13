@@ -37,27 +37,32 @@ function Router() {
       action: contactsAction,
       children: [
         {
-          index: true,
-          element: <p>Select a contact</p>,
+          errorElement: <NavigationError />,
+          children: [
+            {
+              index: true,
+              element: <p>Select a contact</p>,
+            },
+            {
+              path: ":contactId",
+              element: <ContactRead />,
+              loader: contactReadLoader as any,
+              action: contactReadAction as any,
+            },
+            {
+              path: ":contactId/edit",
+              element: <ContactEdit />,
+              loader: contactEditLoader as any,
+              action: contactEditAction as any,
+            },
+            {
+              path: ":contactId/destroy",
+              element: <ContactDelete />,
+              action: contactDeleteAction as any,
+              errorElement: <div>Oops! There was an error.</div>
+            },
+          ]
         },
-        {
-          path: ":contactId",
-          element: <ContactRead />,
-          loader: contactReadLoader as any,
-          action: contactReadAction as any,
-        },
-        {
-          path: ":contactId/edit",
-          element: <ContactEdit />,
-          loader: contactEditLoader as any,
-          action: contactEditAction as any,
-        },
-        {
-          path: ":contactId/destroy",
-          element: <ContactDelete />,
-          action: contactDeleteAction as any,
-          errorElement: <div>Oops! There was an error.</div>
-        }
       ]
     }
   ])
