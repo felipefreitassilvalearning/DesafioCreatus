@@ -81,7 +81,10 @@ function Contact() {
 
 function Favorite({ contact }: { contact: IContact }) {
   const fetcher = useFetcher()
-  const favorite = contact.favorite;
+  // Optimistic UI
+  const favorite = fetcher.formData
+    ? fetcher.formData.get("favorite") === "true"
+    : contact.favorite;
 
   return (
     <fetcher.Form method="post">
