@@ -34,7 +34,7 @@ export async function readUser(userId: UserId): Promise<User> {
 }
 
 export async function updateUser(userId: UserId, user: UserCreate): Promise<string> {
-    return request({
+    return request<string, UserCreate>({
         method: "PUT",
         url: `/user/${userId}`,
         headers: {
