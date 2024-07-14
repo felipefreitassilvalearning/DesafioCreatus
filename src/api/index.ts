@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { getToken } from "../tokenHelper";
 
 
 export const api = axios.create({
@@ -7,11 +8,16 @@ export const api = axios.create({
 });
 
 export async function request<T, D>(options: AxiosRequestConfig<D>): Promise<T> {
+    if (!options.headers) {
+        const userToken = getToken();
+        if (userToken) {
+            options.headers = {
+                Authorization: `Bearer ${userToken}`,
+            };
+        }
+    }
     try {
-        const response = await api.request<T, AxiosResponse<T>, D>({
-            // TODO: Add authorization headers
-            ...options,
-        })
+        const response = await api.request<T, AxiosResponse<T>, D>(options)
         return response.data
     } catch (error) {
         if (axios.isAxiosError<T, D>(error)) {

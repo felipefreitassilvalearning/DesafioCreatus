@@ -1,13 +1,24 @@
-import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
+import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
 
+import { authenticate } from "../api/auth"
 import { readUsers } from "../api/users"
+import { getToken } from "../tokenHelper"
 import { User } from "../types/users"
 import UserDelete from "./UserDelete"
 
 
 export async function loader() {
-	const users = await readUsers()
-	return { users }
+	const userToken = getToken();
+	if (!userToken) {
+		return redirect("/login");
+	}
+	try {
+		await authenticate(userToken);
+	} catch (error) {
+		return redirect("/login");
+	}
+	const users = await readUsers();
+	return { users };
 }
 
 function Users() {
