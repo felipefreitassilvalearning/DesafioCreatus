@@ -1,7 +1,9 @@
+import { AxiosError } from "axios";
 import { Form, Outlet, redirect } from "react-router-dom";
+
+import styles from "./Login.module.scss";
 import { login } from "../api/auth";
 import { LoginCredentials } from "../types/auth";
-import { AxiosError } from "axios";
 import { saveToken } from "../tokenHelper";
 
 
@@ -24,23 +26,38 @@ export async function action({ request }: { request: Request }) {
 
 function Login() {
   return (
-    <div className="wrapper">
-        <div className="img"><img src="" alt="" /></div>
-        <div className="form">
-            <Form action="/login" method="POST">
-                <h2>Bem vindo</h2>
+    <body className={styles.background}>
+        <Form action="/login" method="POST" className={styles.loginForm}>
+            <h2>Bem vindo</h2>
 
-                <label className="input-field" htmlFor="email">Email</label>
-                <input type="email" name="email" placeholder="Email" />
+            <label className={styles.inputField} htmlFor="email">
+                Email
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                    pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    title="Digite um email válido"
+                />
+            </label>
 
-                <label className="input-field" htmlFor="password">Senha</label>
-                <input type="password" name="password" placeholder="Senha" />
+            <label className={styles.inputField} htmlFor="password">
+                Senha
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Senha"
+                    required
+                    minLength={6}
+                    title="A senha deve ter no mínimo 6 caracteres"
+                />
+            </label>
 
-                <button type="submit">Login</button>
-            </Form>
-            <Outlet />
-        </div>
-    </div>
+            <button type="submit">Login</button>
+        </Form>
+        <Outlet />
+    </body>
   )
 }
 

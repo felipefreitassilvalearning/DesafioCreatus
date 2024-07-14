@@ -1,0 +1,49 @@
+.background {
+    background-image: url('/public/loginBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
+
+.loginForm {
+    width: max(50%, 320px);
+    height: 100%;
+
+    padding: 1rem 2rem;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    @media screen and (max-width: 600px) {
+        position: static;
+        margin: auto;
+    }
+    
+    background-color: #ffffff;
+    border-radius: 6px;
+
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    h2 {
+        font-size: 2rem;
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    > * {
+        width: min(100%, 500px);
+    }
+
+    .inputField {
+        margin: 10px 0;
+
+        display: flex;
+        flex-direction: column;
+    }
+}
