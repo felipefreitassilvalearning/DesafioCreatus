@@ -1,20 +1,6 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { request } from ".";
+import { User, UserAPI, userAPItoUser, UserCreate, UserId } from "../types/users";
 
-import { api } from ".";
-import { User, UserCreate } from "../types/users";
-
-
-async function request<T, D>(options: AxiosRequestConfig<D>): Promise<T> {
-    try {
-        const response = await api.request<T, AxiosResponse<T>, D>({
-            // TODO: Add authorization headers
-            ...options,
-        })
-        return response.data
-    } catch (error) {
-        throw new Error("API request failed: " + error)
-    }
-}
 
 export async function createUser(user: UserCreate): Promise<string> {
     return request<string, UserCreate>({
@@ -31,21 +17,23 @@ export async function createUser(user: UserCreate): Promise<string> {
 export async function readUsers(
     // query?: string | null
 ): Promise<User[]> {
-    return request<User[], void>({
+    const usersAPI = await request<UserAPI[], void>({
         method: "GET",
         url: "/users",
         // params: { query },
     })
+    return usersAPI.map(userAPItoUser)
 }
 
-export async function readUser(userId: string): Promise<User> {
-    return request<User, void>({
+export async function readUser(userId: UserId): Promise<User> {
+    const userAPI = await request<UserAPI, void>({
         method: "GET",
         url: `/user/${userId}`,
     })
+    return userAPItoUser({ ...userAPI, id: userId })
 }
 
-export async function updateUser(userId: string, user: UserCreate): Promise<string> {
+export async function updateUser(userId: UserId, user: UserCreate): Promise<string> {
     return request({
         method: "PUT",
         url: `/user/${userId}`,
@@ -56,9 +44,7 @@ export async function updateUser(userId: string, user: UserCreate): Promise<stri
     })
 }
 
-// Not implemented in the API
-export async function deleteUser(userId: string): Promise<string> {
-    throw new Error("Not implemented")
+export async function deleteUser(userId: UserId): Promise<string> {
     return request<string, void>({
         method: "DELETE",
         url: `/user/${userId}`,
