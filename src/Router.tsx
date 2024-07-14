@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import NavigationError from "./pages/NavigationError"
+import Login, { action as loginAction } from "./pages/Login"
 import Users, { loader as usersLoader } from "./pages/Users"
 import User, { loader as userLoader } from "./pages/User"
 import UserCreate, { action as createUserAction } from "./pages/UserCreate"
@@ -18,8 +19,9 @@ function Router() {
     },
     {
       path: "/login",
-      element: <div>Login</div>,
-      errorElement: <NavigationError />
+      element: <Login />,
+      action: loginAction,
+      errorElement: <NavigationError />,
     },
     {
       path: "/users",

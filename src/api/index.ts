@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
 
 export const api = axios.create({
@@ -14,6 +14,9 @@ export async function request<T, D>(options: AxiosRequestConfig<D>): Promise<T> 
         })
         return response.data
     } catch (error) {
+        if (axios.isAxiosError<T, D>(error)) {
+            throw new AxiosError("API request failed", error.code, error.config, error.request, error.response)
+        }
         throw new Error("API request failed: " + error)
     }
 }
