@@ -1,0 +1,20 @@
+// <div className={styles.header}>
+// <div className={styles.name}>
+//     <img src="" alt="User Profile Picture" />
+//     <h3>{user.name}</h3>
+// </div>
+// <div className={styles.action}>
+//     <Link to='/users'>Voltar para tabela</Link>
+// </div>
+// </div>
+// <div className={styles.content}>
+// <h4>Informações</h4>
+// <div className={styles.userDetails}>
+//     {userDetails.map(([key, value]) => (
+//         <div key={key} className={styles.userDetail}>
+//             <label>{key}</label>
+//             <input readOnly value={value} />
+//         </div>
+//     ))}
+// </div>
+// </div>
