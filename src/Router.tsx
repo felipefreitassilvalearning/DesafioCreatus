@@ -1,9 +1,9 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import NavigationError from "./pages/NavigationError"
 import Users, { loader as usersLoader } from "./pages/Users"
 import User, { loader as userLoader } from "./pages/User"
-import { action as createUserAction } from "./pages/UserCreate"
+import UserCreate, { action as createUserAction } from "./pages/UserCreate"
 import { action as userDeleteAction } from "./pages/UserDelete"
 
 
@@ -21,20 +21,20 @@ function Router() {
     },
     {
       path: "/users",
-      element: <div className="background"><Outlet /></div>,
+      element: <Users />,
+      loader: usersLoader,
       errorElement: <NavigationError />,
       children: [
         {
           errorElement: <NavigationError />,
           children: [
             {
-              index: true,
-              element: <Users />,
+              path: "create",
+              element: <UserCreate />,
               action: createUserAction,
-              loader: usersLoader,
             },
             {
-              path: ":userId",
+              path: ":userId/profile",
               element: <User />,
               // TODO: Fix this any
               loader: userLoader as any,

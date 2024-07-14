@@ -1,9 +1,7 @@
-import { useState } from "react"
-import { useLoaderData, useNavigate } from "react-router-dom"
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom"
 
 import { readUsers } from "../api/users"
 import { User } from "../types/users"
-import UserCreate from "./UserCreate"
 import UserDelete from "./UserDelete"
 
 
@@ -15,16 +13,15 @@ export async function loader() {
 function Users() {
 	const { users } = useLoaderData() as { users: User[] }
 	const navigate = useNavigate()
-	const [isOpenCreateUserModal, setIsOpenCreateUserModal] = useState<boolean>(false)
 
 	return (
-		<>
+		<div className="wrapper">
 			<table>
 				<thead>
 					<tr>
 						<th colSpan={3}>Usuários</th>
 						<th colSpan={2}>
-							<button onClick={() => setIsOpenCreateUserModal(true)}>
+							<button onClick={() => { navigate("create") }}>
 								Adicionar Usuário
 							</button>
 						</th>
@@ -60,11 +57,8 @@ function Users() {
 					)}
 				</tbody>
 			</table>
-			<UserCreate
-				isOpen={isOpenCreateUserModal}
-				onRequestClose={() => setIsOpenCreateUserModal(false)}
-			/>
-		</>
+			<Outlet />
+		</div>
 	)
 }
 

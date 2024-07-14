@@ -1,5 +1,6 @@
-import Modal, { Props as ReactModalProps } from 'react-modal'
-import { Form } from 'react-router-dom'
+import { useState } from 'react';
+import Modal from 'react-modal'
+import { Form, redirect, useNavigate } from 'react-router-dom'
 
 import { createUser } from '../api/users';
 import { UserCreate as IUserCreate } from '../types/users';
@@ -14,14 +15,20 @@ export async function action({ request }: { request: Request; }) {
     }
     delete user.confirmPassword;
     await createUser(user);
-    return { user }
+    return redirect('/users');
 }
 
-function UserCreate({ isOpen, onRequestClose }: ReactModalProps) {
+function UserCreate() {
+    const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState<boolean>(true);
+
     return (
         <Modal
             isOpen={isOpen}
-            onRequestClose={onRequestClose}
+            onRequestClose={() => {
+                setIsOpen(false)
+                navigate(-1)
+            }}
             ariaHideApp={false}
         >
             <Form method='POST' id='user-create-form'>
