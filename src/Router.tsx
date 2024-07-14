@@ -1,6 +1,7 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 
 import Users, { loader as usersLoader } from "./pages/Users"
+import { action as createUserAction } from "./pages/UserCreate"
 
 
 function Router() {
@@ -17,10 +18,8 @@ function Router() {
     },
     {
       path: "/users",
-      element: <Outlet />,
+      element: <div className="background"><Outlet /></div>,
       errorElement: <div>UsersError</div>,
-      // loader: usersLoader,
-      // action: usersAction,
       children: [
         {
           errorElement: <div>UsersNavigationError</div>,
@@ -28,10 +27,11 @@ function Router() {
             {
               index: true,
               element: <Users />,
+              action: createUserAction,
               loader: usersLoader,
             },
             // {
-            //   path: ":userId",
+            //   path: ":userId/read",
             //   element: <div>UserRead</div>,
             //   loader: userReadLoader as any,
             //   action: userReadAction as any,

@@ -2,6 +2,8 @@ import { useLoaderData } from "react-router-dom"
 
 import { readUsers } from "../api/users"
 import { User } from "../types/users"
+import { useState } from "react"
+import UserCreate from "./UserCreate"
 
 
 export async function loader() {
@@ -11,15 +13,16 @@ export async function loader() {
 
 function Users() {
 	const { users } = useLoaderData() as { users: User[] }
+	const [isOpenCreateUserModal, setIsOpenCreateUserModal] = useState<boolean>(false)
 
 	return (
-		<div className="background">
+		<>
 			<table>
 				<thead>
 					<tr>
 						<th colSpan={3}>Usuários</th>
 						<th colSpan={2}>
-							<button>
+							<button onClick={() => setIsOpenCreateUserModal(true)}>
 								Adicionar Usuário
 							</button>
 						</th>
@@ -48,7 +51,11 @@ function Users() {
 					)}
 				</tbody>
 			</table>
-		</div>
+			<UserCreate
+				isOpen={isOpenCreateUserModal}
+				onRequestClose={() => setIsOpenCreateUserModal(false)}
+			/>
+		</>
 	)
 }
 
