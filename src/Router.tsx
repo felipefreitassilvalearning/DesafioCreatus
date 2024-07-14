@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import NavigationError from "./pages/NavigationError"
+import Page404, { loader as page404Loader } from "./pages/Page404"
 import Login, { action as loginAction } from "./pages/Login"
 import Users, { loader as usersLoader } from "./pages/Users"
 import User, { loader as userLoader } from "./pages/User"
@@ -13,9 +14,9 @@ function Router() {
   // TODO: Fix actions and loaders types
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <div>Root</div>,
-      errorElement: <NavigationError />
+      path: "*",
+      element: <Page404 />,
+      loader: page404Loader,
     },
     {
       path: "/login",
