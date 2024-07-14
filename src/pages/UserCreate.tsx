@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-modal'
 import { Form, redirect, useNavigate } from 'react-router-dom'
 
+import './Users/styles.scss'
 import { createUser } from '../api/users';
 import { UserCreate as IUserCreate } from '../types/users';
 
@@ -22,37 +23,61 @@ function UserCreate() {
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState<boolean>(true);
 
+    function closeModal() {
+        setIsOpen(false)
+        navigate(-1)
+    }
+
     return (
         <Modal
             isOpen={isOpen}
-            onRequestClose={() => {
-                setIsOpen(false)
-                navigate(-1)
-            }}
+            onRequestClose={closeModal}
             ariaHideApp={false}
+            style={{
+                overlay: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+                },
+                content: {
+                    margin: 'auto',
+                    maxWidth: '600px',
+                }
+            }}
         >
-            <Form method='POST' id='user-create-form'>
+            <Form method='POST' id='user-create-form' className='user-modal-form'>
+                <button className="closeModal" onClick={closeModal}>X</button>
+
                 <h2>Criar Usuário</h2>
-                <label htmlFor="name">Nome</label>
-                <input type="text" id="name" name="name" />
+
+                <label htmlFor="name">
+                    Nome
+                    <input type="text" id="name" name="name" />
+                </label>
                 
-                <label htmlFor="email">Email</label>
-                <input type="email" id="email" name="email" />
+                <label htmlFor="email">
+                    Email
+                    <input type="email" id="email" name="email" />
+                </label>
                 
-                <label htmlFor="accessLevel">Nível de Acesso</label>
-                <select id="accessLevel" name="accessLevel">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
+                <label htmlFor="accessLevel">
+                    Nível de Acesso
+                    <select id="accessLevel" name="accessLevel">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </label>
                 
-                <label htmlFor="password">Senha</label>
-                <input type="password" id="password" name="password" />
+                <label htmlFor="password">
+                    Senha
+                    <input type="password" id="password" name="password" />
+                </label>
                 
-                <label htmlFor="confirmPassword">Confirmar Senha</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" />
+                <label htmlFor="confirmPassword">
+                    Confirmar Senha
+                    <input type="password" id="confirmPassword" name="confirmPassword" />
+                </label>
 
                 <button type="submit">Criar</button>
             </Form>
