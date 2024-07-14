@@ -33,12 +33,6 @@ function Router() {
               element: <UserCreate />,
               action: createUserAction,
             },
-            {
-              path: ":userId/profile",
-              element: <User />,
-              // TODO: Fix this any
-              loader: userLoader as any,
-            },
             // {
             //   path: ":userId/edit",
             //   element: <div>UserEdit</div>,
@@ -54,6 +48,12 @@ function Router() {
           ]
         },
       ]
+    },
+    {
+      path: "/users/:userId/profile",
+      element: <User />,
+      // TODO: Fix this any
+      loader: userLoader as any,
     },
   ])
 

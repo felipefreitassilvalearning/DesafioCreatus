@@ -38,7 +38,7 @@ function Users() {
 					{users.length > 0 ? users.map((user) => (
 						<tr
 							key={user.id}
-							onClick={() => { navigate(`${user.id}`) }}
+							onClick={() => { navigate(`${user.id}/profile`) }}
 							tabIndex={0}
 							style={{ cursor: "pointer" }}
 							title="Clique para ver detalhes do usuário"
