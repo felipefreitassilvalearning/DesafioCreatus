@@ -2,8 +2,9 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 
 import NavigationError from "./pages/NavigationError"
 import Users, { loader as usersLoader } from "./pages/Users"
-import { action as createUserAction } from "./pages/UserCreate"
 import User, { loader as userLoader } from "./pages/User"
+import { action as createUserAction } from "./pages/UserCreate"
+import { action as userDeleteAction } from "./pages/UserDelete"
 
 
 function Router() {
@@ -44,12 +45,12 @@ function Router() {
             //   loader: userEditLoader as any,
             //   action: userEditAction as any,
             // },
-            // {
-            //   path: ":userId/destroy",
-            //   element: <div>UserDelete</div>,
-            //   action: userDeleteAction as any,
-            //   errorElement: <div>UserDeleteError</div>
-            // },
+            {
+              path: ":userId/delete",
+              element: <></>,
+              action: userDeleteAction as any,
+              errorElement: <div>UserDeleteError</div>
+            },
           ]
         },
       ]

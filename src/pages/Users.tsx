@@ -1,9 +1,10 @@
+import { useState } from "react"
 import { useLoaderData, useNavigate } from "react-router-dom"
 
 import { readUsers } from "../api/users"
 import { User } from "../types/users"
-import { useState } from "react"
 import UserCreate from "./UserCreate"
+import UserDelete from "./UserDelete"
 
 
 export async function loader() {
@@ -50,7 +51,7 @@ function Users() {
 							<td>{user.email}</td>
 							<td>{user.level}</td>
 							<td><button>Editar</button></td>
-							<td><button>Excluir</button></td>
+							<td><UserDelete userId={user.id} /></td>
 						</tr>
 					)) : (
 						<tr>
