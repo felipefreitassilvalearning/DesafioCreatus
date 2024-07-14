@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 
 import Users, { loader as usersLoader } from "./pages/Users"
 import { action as createUserAction } from "./pages/UserCreate"
+import NavigationError from "./pages/NavigationError"
 
 
 function Router() {
@@ -9,20 +10,20 @@ function Router() {
     {
       path: "/",
       element: <div>Root</div>,
-      errorElement: <div>NavigationError</div>
+      errorElement: <NavigationError />
     },
     {
       path: "/login",
       element: <div>Login</div>,
-      errorElement: <div>LoginError</div>
+      errorElement: <NavigationError />
     },
     {
       path: "/users",
       element: <div className="background"><Outlet /></div>,
-      errorElement: <div>UsersError</div>,
+      errorElement: <NavigationError />,
       children: [
         {
-          errorElement: <div>UsersNavigationError</div>,
+          errorElement: <NavigationError />,
           children: [
             {
               index: true,
