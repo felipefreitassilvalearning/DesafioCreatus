@@ -47,7 +47,14 @@ function Users() {
 							<td>{user.name}</td>
 							<td>{user.email}</td>
 							<td>{user.level}</td>
-							<td><button>Editar</button></td>
+							<td>
+								<button onClick={(e) => {
+									e.stopPropagation()
+									navigate(`${user.id}/edit`)
+								}}>
+									Editar
+								</button>
+							</td>
 							<td><UserDelete userId={user.id} /></td>
 						</tr>
 					)) : (

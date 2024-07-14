@@ -14,12 +14,14 @@ type UserEditParams = {
 
 export async function action({ request, params }: { request: Request; } & UserEditParams) {
     const formData = await request.formData();
-    type UserEditFormData = IUserCreate & { confirmPassword?: string };
-    const updatedUser = Object.fromEntries(formData) as unknown as UserEditFormData;
-    if (updatedUser.password !== updatedUser.confirmPassword) {
-        throw new Error('As senhas não conferem');
-    }
-    delete updatedUser.confirmPassword;
+    // type UserEditFormData = IUserCreate & { confirmPassword?: string };
+    const updatedUser = Object.fromEntries(formData) as unknown as IUserCreate;
+    // if (updatedUser.password !== updatedUser.confirmPassword) {
+    //     throw new Error('As senhas não conferem');
+    // }
+    // delete updatedUser.confirmPassword;
+    // TODO: Password should be opitonal when editing, as we don't want to update it if it's empty and we don't know the previous password
+    updatedUser.password = updatedUser.password ?? "changedByEdit";
     await updateUser(params.userId, updatedUser);
     return redirect('/users');
 }
@@ -60,7 +62,7 @@ function UserEdit() {
                     <option value="5">5</option>
                 </select>
 
-                <button type="submit">Criar</button>
+                <button type="submit">Salvar</button>
             </Form>
         </Modal>
     )
