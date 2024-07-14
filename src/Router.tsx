@@ -1,4 +1,6 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
+
+import Users, { loader as usersLoader } from "./pages/Users"
 
 
 function Router() {
@@ -15,7 +17,7 @@ function Router() {
     },
     {
       path: "/users",
-      element: <div>UsersWrapper</div>,
+      element: <Outlet />,
       errorElement: <div>UsersError</div>,
       // loader: usersLoader,
       // action: usersAction,
@@ -25,7 +27,8 @@ function Router() {
           children: [
             {
               index: true,
-              element: <div>Select a user</div>,
+              element: <Users />,
+              loader: usersLoader,
             },
             // {
             //   path: ":userId",
