@@ -1,8 +1,9 @@
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 
+import NavigationError from "./pages/NavigationError"
 import Users, { loader as usersLoader } from "./pages/Users"
 import { action as createUserAction } from "./pages/UserCreate"
-import NavigationError from "./pages/NavigationError"
+import User, { loader as userLoader } from "./pages/User"
 
 
 function Router() {
@@ -31,12 +32,12 @@ function Router() {
               action: createUserAction,
               loader: usersLoader,
             },
-            // {
-            //   path: ":userId/read",
-            //   element: <div>UserRead</div>,
-            //   loader: userReadLoader as any,
-            //   action: userReadAction as any,
-            // },
+            {
+              path: ":userId",
+              element: <User />,
+              // TODO: Fix this any
+              loader: userLoader as any,
+            },
             // {
             //   path: ":userId/edit",
             //   element: <div>UserEdit</div>,

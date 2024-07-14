@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, useNavigate } from "react-router-dom"
 
 import { readUsers } from "../api/users"
 import { User } from "../types/users"
@@ -13,6 +13,7 @@ export async function loader() {
 
 function Users() {
 	const { users } = useLoaderData() as { users: User[] }
+	const navigate = useNavigate()
 	const [isOpenCreateUserModal, setIsOpenCreateUserModal] = useState<boolean>(false)
 
 	return (
@@ -37,7 +38,14 @@ function Users() {
 				</thead>
 				<tbody>
 					{users.length > 0 ? users.map((user) => (
-						<tr key={user.id}>
+						<tr
+							key={user.id}
+							onClick={() => { navigate(`${user.id}`) }}
+							tabIndex={0}
+							style={{ cursor: "pointer" }}
+							title="Clique para ver detalhes do usuário"
+							aria-label="Clique para ver detalhes do usuário"
+						>
 							<td>{user.name}</td>
 							<td>{user.email}</td>
 							<td>{user.level}</td>
