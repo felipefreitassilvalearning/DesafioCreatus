@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-modal'
 import { Form, redirect, useNavigate } from 'react-router-dom'
 
-import './Users/styles.scss'
+import styles from './UserModal.module.scss'
 import { createUser } from '../api/users';
 import { UserCreate as IUserCreate } from '../types/users';
 
@@ -43,8 +43,8 @@ function UserCreate() {
                 }
             }}
         >
-            <Form method='POST' id='user-create-form' className='user-modal-form'>
-                <button className="closeModal" onClick={closeModal}>X</button>
+            <Form method='POST' id='user-create-form' className={styles.userModalForm}>
+                <button className={styles.closeModal} onClick={closeModal}>X</button>
 
                 <h2>Criar Usuário</h2>
 

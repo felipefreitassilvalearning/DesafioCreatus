@@ -1,6 +1,6 @@
 import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
 
-import "./Users/styles.scss"
+import styles from "./Users.module.scss"
 import { authenticate } from "../api/auth"
 import { readUsers } from "../api/users"
 import { getToken } from "../tokenHelper"
@@ -27,20 +27,23 @@ function Users() {
 	const navigate = useNavigate()
 
 	return (
-		<body>
+		<>
 			<div className="wrapper">
-				<table className="usersTable">
+				<table className={styles.usersTable}>
 					<thead>
-						<tr className="actionHeader">
+						<tr className={styles.actionHeader}>
 							<th colSpan={3}>Usuários</th>
 							<th colSpan={2}>
-								<button onClick={() => { navigate("create") }}>
+								<button
+									onClick={() => { navigate("create") }}
+									className={styles.addUser}
+								>
 									Adicionar Usuário
 								</button>
 							</th>
 						</tr>
 						<tr data-spacer></tr>
-						<tr className="infoHeader">
+						<tr className={styles.infoHeader}>
 							<th>Nome</th>
 							<th>Email</th>
 							<th>Nível de Acesso</th>
@@ -62,11 +65,17 @@ function Users() {
 								<td>{user.email}</td>
 								<td>{user.level}</td>
 								<td>
-									<button onClick={(e) => {
-										e.stopPropagation()
-										navigate(`${user.id}/edit`)
-									}}>
-										Editar
+									<button
+										type="button"
+										onClick={(e) => {
+											e.stopPropagation()
+											navigate(`${user.id}/edit`)
+										}}
+										className="clean"
+										aria-label="Editar Usuário"
+										title="Editar"
+									>
+										<img src="/editIcon.png" alt="Editar" />
 									</button>
 								</td>
 								<td><UserDelete userId={user.id} /></td>
@@ -80,7 +89,7 @@ function Users() {
 				</table>
 			</div>
 			<Outlet />
-		</body>
+		</>
 	)
 }
 

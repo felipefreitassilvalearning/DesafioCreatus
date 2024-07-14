@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-modal'
 import { Form, redirect, useLoaderData, useNavigate } from 'react-router-dom'
 
-import './Users/styles.scss'
+import styles from './UserModal.module.scss'
 import { readUser, updateUser } from '../api/users';
 import { UserCreate as IUserCreate, User, UserId } from '../types/users';
 
@@ -57,8 +57,8 @@ function UserEdit() {
                 }
             }}
         >
-            <Form method='POST' id='user-create-form' className='user-modal-form'>
-                <button className="closeModal" onClick={closeModal}>X</button>
+            <Form method='POST' id='user-create-form' className={styles.userModalForm}>
+                <button className={styles.closeModal} onClick={closeModal}>X</button>
 
                 <h2>Editar Usuário</h2>
 

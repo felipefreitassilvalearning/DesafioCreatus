@@ -27,8 +27,14 @@ function UserDelete({ userId }: UserDeleteProps) {
             action={`${userId}/delete`}
             onSubmit={onDeleteUser}
         >
-            <button type="submit" onClick={(e) => { e.stopPropagation() }}>
-                Excluir
+            <button
+                type="submit"
+                onClick={(e) => { e.stopPropagation() }}
+                className="clean"
+                aria-label="Excluir Usuário"
+                title="Excluir"
+            >
+                <img src="/deleteIcon.png" alt="Excluir" />
             </button>
         </Form>
     )

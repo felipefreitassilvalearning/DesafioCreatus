@@ -1,10 +1,17 @@
 .background {
-    background-image: url('/public/loginBackground.jpg');
+    background-image: url('/loginBackground.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     position: relative;
+    min-height: 100vh;
+
+    @media screen and (max-width: 600px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .loginForm {
@@ -16,10 +23,6 @@
     position: absolute;
     top: 0;
     right: 0;
-    @media screen and (max-width: 600px) {
-        position: static;
-        margin: auto;
-    }
     
     background-color: #ffffff;
     border-radius: 6px;
@@ -45,5 +48,9 @@
 
         display: flex;
         flex-direction: column;
+    }
+
+    @media screen and (max-width: 600px) {
+        position: static;
     }
 }

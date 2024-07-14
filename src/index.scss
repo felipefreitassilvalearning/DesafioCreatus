@@ -40,6 +40,11 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   background-color: $background-color;
+
+  div#root {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 h1 {
@@ -55,19 +60,30 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  
+
   color: #ffffff;
   background-color: #065D2F;
   
   cursor: pointer;
   transition: background-color 0.25s;
   
+  &.clean {
+    background-color: transparent;
+  }
+  
   &:hover {
-    background-color: #334155;
+    border-color: #065D2F;
+    &:not(.clean) {
+      background-color: #334155;
+    }
   }
   &:focus,
   &:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
+    outline-offset: 2px;
+    &:not(.clean) {
+      background-color: #334155;
+    }
   }
 }
 

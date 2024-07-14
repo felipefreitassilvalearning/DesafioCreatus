@@ -26,7 +26,7 @@ export async function action({ request }: { request: Request }) {
 
 function Login() {
   return (
-    <body className={styles.background}>
+    <div className={styles.background}>
         <Form action="/login" method="POST" className={styles.loginForm}>
             <h2>Bem vindo</h2>
 
@@ -57,7 +57,7 @@ function Login() {
             <button type="submit">Login</button>
         </Form>
         <Outlet />
-    </body>
+    </div>
   )
 }
 
