@@ -10,8 +10,11 @@ import UserEdit, { loader as userEditLoader, action as userEditAction } from "./
 import { action as userDeleteAction } from "./pages/UserDelete"
 
 
+// TODO: Improve these unknown and make them match with react router dom types
+type Loader<T = unknown, U = unknown> = (params: { params: T }) => Promise<U>
+type Action<T = unknown, U = unknown> = (params: { request: Request; params: T }) => Promise<U>
+
 function Router() {
-    // TODO: Fix actions and loaders types
     const router = createBrowserRouter([
         {
             path: "*",
@@ -39,21 +42,20 @@ function Router() {
                 {
                     path: ":userId/edit",
                     element: <UserEdit />,
-                    loader: userEditLoader as any,
-                    action: userEditAction as any,
+                    loader: userEditLoader as Loader,
+                    action: userEditAction as Action,
                 },
                 {
                     path: ":userId/delete",
                     element: <></>,
-                    action: userDeleteAction as any,
-                    errorElement: <div>UserDeleteError</div>
+                    action: userDeleteAction as Action,
                 },
             ],
         },
         {
             path: "/users/:userId/profile",
             element: <User />,
-            loader: userLoader as any,
+            loader: userLoader as Loader,
         },
     ])
 
