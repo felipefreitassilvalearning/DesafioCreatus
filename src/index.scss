@@ -122,4 +122,9 @@ input {
   &:focus {
     border-color: #646cff;
   }
+
+  &.clean {
+    border-color: transparent;
+    background-color: inherit;
+  }
 }

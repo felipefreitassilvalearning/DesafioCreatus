@@ -1,4 +1,5 @@
-import { Outlet, redirect, useLoaderData, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { Form, Outlet, redirect, useLoaderData, useNavigate, useNavigation, useSubmit } from "react-router-dom"
 
 import styles from "./Users.module.scss"
 import { authenticate } from "../api/auth"
@@ -8,7 +9,7 @@ import { User } from "../types/users"
 import UserDelete from "./UserDelete"
 
 
-export async function loader() {
+export async function loader({ request }: { request: Request; }) {
     const userToken = getToken();
     if (!userToken) {
         return redirect("/login");
@@ -18,13 +19,48 @@ export async function loader() {
     } catch (error) {
         return redirect("/login");
     }
-    const users = await readUsers();
-    return { users };
+    const url = new URL(request.url);
+    const query = url.searchParams.get("query");
+    const orderBy = url.searchParams.get("orderBy") as keyof User | null;
+    const users = await readUsers(query, orderBy);
+    return { users, query, orderBy };
 }
 
 function Users() {
-    const { users } = useLoaderData() as { users: User[] }
+    const { users, query, orderBy } = useLoaderData() as {
+        users: User[];
+        query: string | null;
+        orderBy: keyof User | null;
+    };
+    const navigation = useNavigation()
     const navigate = useNavigate()
+    const submit = useSubmit()
+
+    const searching = (
+        navigation.location && new URLSearchParams(navigation.location.search).has("query"))
+
+    useEffect(() => {
+        const queryElement = document.getElementById("q") as HTMLInputElement | null;
+        if (queryElement && query) {
+            queryElement.value = query;
+        }
+    }, [query])
+
+    const HiddenQueryInput = () => (
+        <input
+            type="hidden"
+            name="query"
+            value={query ?? ""}
+        />
+    )
+
+    const HiddenOrderByInput = ({ value }: { value?: keyof User }) => (
+        <input
+            type="hidden"
+            name="orderBy"
+            value={value ?? orderBy ?? undefined}
+        />
+    )
 
     return (
         <>
@@ -32,8 +68,28 @@ function Users() {
                 <table className={styles.usersTable}>
                     <thead>
                         <tr className={styles.actionHeader}>
-                            <th colSpan={3}>Usuários</th>
-                            <th colSpan={2}>
+                            <th colSpan={1}>Usuários</th>
+                            <th colSpan={1}>
+                                <Form id="search-form" role="search">
+                                    <input
+                                        id="q"
+                                        className={searching ? styles.loading : undefined}
+                                        aria-label="Search users"
+                                        placeholder="Search"
+                                        type="search"
+                                        name="query"
+                                        defaultValue={query ?? undefined}
+                                        onChange={(event) => {
+                                            const isFirstSearch = (query === null && orderBy === null);
+                                            submit(event.currentTarget.form, {
+                                                replace: !isFirstSearch,
+                                            });
+                                        }}
+                                    />
+                                    <HiddenOrderByInput />
+                                </Form>
+                            </th>
+                            <th colSpan={3}>
                                 <button
                                     onClick={() => { navigate("create") }}
                                     className={styles.addUser}
@@ -44,9 +100,42 @@ function Users() {
                         </tr>
                         <tr data-spacer></tr>
                         <tr className={styles.infoHeader}>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Nível de Acesso</th>
+                            <th>
+                                <Form role="search">
+                                    <HiddenOrderByInput value="name" />
+                                    <HiddenQueryInput />
+                                    <button>
+                                        Name
+                                    </button>
+                                    {orderBy === "name" && (
+                                        <span className={styles.orderBy}>&darr;</span>
+                                    )}
+                                </Form>
+                            </th>
+                            <th>
+                                <Form role="search">
+                                    <HiddenOrderByInput value="email" />
+                                    <HiddenQueryInput />
+                                    <button>
+                                        Email
+                                    </button>
+                                    {orderBy === "email" && (
+                                        <span className={styles.orderBy}>&darr;</span>
+                                    )}
+                                </Form>
+                            </th>
+                            <th>
+                                <Form role="search">
+                                    <HiddenOrderByInput value="level" />
+                                    <HiddenQueryInput />
+                                    <button>
+                                        Nível de Acesso
+                                    </button>
+                                    {orderBy === "level" && (
+                                        <span className={styles.orderBy}>&darr;</span>
+                                    )}
+                                </Form>
+                            </th>
                             <th><span hidden>Editar</span></th>
                             <th><span hidden>Excluir</span></th>
                         </tr>

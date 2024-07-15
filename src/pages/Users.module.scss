@@ -12,6 +12,15 @@ table.usersTable {
                     text-align: left;
                     font-size: 1.5rem;
                 }
+                &:nth-child(2) {
+                    input {
+                        width: 100%;
+
+                        &.searching {
+                            background-color: #f5f5f5;
+                        }
+                    }
+                }
                 &:last-child {
                     text-align: right;
                 }
@@ -28,14 +37,19 @@ table.usersTable {
         }
 
         tr.infoHeader {
-            color: #667085;
-            text-transform: uppercase;
             height: 50px;
             
             th {
                 background-color: #FAFAFA;
                 &:has(span[hidden]) {
                     width: 0;
+                }
+
+                button {
+                    background-color: transparent;
+                    
+                    color: #667085;
+                    text-transform: uppercase;
                 }
             }
         }

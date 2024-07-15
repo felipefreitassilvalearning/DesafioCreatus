@@ -13,16 +13,48 @@ export async function createUser(user: UserCreate): Promise<string> {
     })
 }
 
-// Query param for filtering not implemented in the API
+
+function userMatchesQuery(user: User, query: string | null): User | null {
+    if (!query) {
+        return user
+    }
+    const queryLower = query.toLowerCase()
+    if (
+        user.name.toLowerCase().includes(queryLower)
+        || user.email.toLowerCase().includes(queryLower)
+    ) {
+        return user
+    }
+    return null
+}
+function orderUsers(
+    users: User[],
+    orderBy: keyof User,
+): User[] {
+    return users.sort((a, b) => {
+        if (typeof a[orderBy] === "string") {
+            return a[orderBy].localeCompare(b[orderBy] as string)
+        }
+        return (a[orderBy] as number) - (b[orderBy] as number)
+    })
+}
+// Params for filtering and ordering not implemented in the API
 export async function readUsers(
-    // query?: string | null
+    query?: string | null,
+    orderBy?: keyof User | null,
 ): Promise<User[]> {
     const usersAPI = await request<UserAPI[], void>({
         method: "GET",
         url: "/users",
-        // params: { query },
     })
-    return usersAPI.map(userAPItoUser)
+    let users = usersAPI.map(userAPItoUser)
+    if (query) {
+        users = users.filter((user) => userMatchesQuery(user, query))
+    }
+    if (orderBy) {
+        users = orderUsers(users, orderBy)
+    }
+    return users
 }
 
 export async function readUser(userId: UserId): Promise<User> {
