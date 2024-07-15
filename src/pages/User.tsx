@@ -22,7 +22,8 @@ function User() {
     const hiddenUserFields = ["id"];
     const userDetails = Object.entries(user).filter(([key]) => !hiddenUserFields.includes(key));
     const userInitials = (() => {
-        const [firstName, lastName] = user.name.split(" ");
+        const [firstName, ...otherNames] = user.name.split(" ");
+        const lastName = otherNames.pop();
         if (lastName) {
             return `${firstName.charAt(0)}${lastName.charAt(0)}`;
         }
