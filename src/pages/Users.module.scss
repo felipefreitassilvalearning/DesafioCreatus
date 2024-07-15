@@ -79,3 +79,15 @@ table.usersTable {
         }
     }
 }
+
+.logoutButton {
+    color: #202224;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+
+    img {
+        width: 24px;
+        height: 24px;
+    }
+}

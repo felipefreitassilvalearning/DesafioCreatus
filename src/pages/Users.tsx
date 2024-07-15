@@ -4,7 +4,7 @@ import { Form, Outlet, redirect, useLoaderData, useNavigate, useNavigation, useS
 import styles from "./Users.module.scss"
 import { authenticate } from "../api/auth"
 import { readUsers } from "../api/users"
-import { getToken } from "../tokenHelper"
+import { getToken, removeToken } from "../tokenHelper"
 import { User } from "../types/users"
 import UserDelete from "./UserDelete"
 
@@ -39,6 +39,11 @@ function Users() {
 
     const searching = (
         navigation.location && new URLSearchParams(navigation.location.search).has("query"))
+
+    function logout() {
+        removeToken();
+        navigate("/login");
+    }
 
     useEffect(() => {
         const queryElement = document.getElementById("q") as HTMLInputElement | null;
@@ -179,6 +184,14 @@ function Users() {
                 </table>
             </div>
             <Outlet />
+            <button
+                className={`clean ${styles.logoutButton}`}
+                aria-label="Sair"
+                title="Sair"
+                onClick={logout}
+            >
+                <img src="/public/exitDoor.png" alt="Sair" />
+            </button>
         </>
     )
 }
