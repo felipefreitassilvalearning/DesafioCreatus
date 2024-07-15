@@ -1,20 +1,74 @@
-// <div className={styles.header}>
-// <div className={styles.name}>
-//     <img src="" alt="User Profile Picture" />
-//     <h3>{user.name}</h3>
-// </div>
-// <div className={styles.action}>
-//     <Link to='/users'>Voltar para tabela</Link>
-// </div>
-// </div>
-// <div className={styles.content}>
-// <h4>Informações</h4>
-// <div className={styles.userDetails}>
-//     {userDetails.map(([key, value]) => (
-//         <div key={key} className={styles.userDetail}>
-//             <label>{key}</label>
-//             <input readOnly value={value} />
-//         </div>
-//     ))}
-// </div>
-// </div>
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ccc;
+
+    .name {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        $imageSize: 75px;
+
+        .profilePicture {
+            width: $imageSize;
+            height: $imageSize;
+            
+            position: absolute;
+            top: 80%;
+            left: 0;
+            transform: translateY(-50%);
+            
+            display: grid;
+            place-items: center;
+            
+            border-radius: 50%;
+
+            color: white;
+            background-color: #065D2F;
+
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            margin-left: 1.2 * $imageSize;
+            font-size: 1.5rem;
+        }
+    }
+}
+
+.content {
+    margin-top: 1rem;
+    padding: 2rem;
+
+    font-weight: bold;
+
+    h4 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .userDetails {
+        gap: 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+        .userDetail {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                margin-bottom: 0.5rem;
+            }
+
+            input {
+                font-weight: normal;
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 
 import styles from './User.module.scss'
 import { readUser } from "../api/users";
@@ -17,19 +17,35 @@ export async function loader({ params }: { params: { userId: string } }) {
 }
 
 function User() {
+    const navigate = useNavigate()
     const { user } = useLoaderData() as { user: IUser };
     const hiddenUserFields = ["id"];
     const userDetails = Object.entries(user).filter(([key]) => !hiddenUserFields.includes(key));
+    const userInitials = (() => {
+        const [firstName, lastName] = user.name.split(" ");
+        if (lastName) {
+            return `${firstName.charAt(0)}${lastName.charAt(0)}`;
+        }
+        return firstName.charAt(0);
+    })()
+    const toUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
     return (
         <div className="wrapper">
             <div className={styles.header}>
                 <div className={styles.name}>
-                    <img src="" alt="User Profile Picture" />
+                    <span className={styles.profilePicture}>
+                        {userInitials}
+                    </span>
+                    {/* <img
+                        src=""
+                        alt="User Profile Picture"
+                        className={styles.profilePicture}
+                    /> */}
                     <h3>{user.name}</h3>
                 </div>
                 <div className={styles.action}>
-                    <Link to='/users'>Voltar para tabela</Link>
+                    <button onClick={() => { navigate("/users") }}>Voltar para tabela</button>
                 </div>
             </div>
             <div className={styles.content}>
@@ -37,7 +53,7 @@ function User() {
                 <div className={styles.userDetails}>
                     {userDetails.map(([key, value]) => (
                         <div key={key} className={styles.userDetail}>
-                            <label>{key}</label>
+                            <label>{toUpperCase(key)}</label>
                             <input readOnly value={value} />
                         </div>
                     ))}
