@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { Form, Outlet, redirect } from "react-router-dom";
+import { Form, redirect, useActionData } from "react-router-dom";
 
 import styles from "./Login.module.scss";
 import { login } from "../api/auth";
@@ -16,16 +16,33 @@ export async function action({ request }: { request: Request }) {
         return redirect("/users");
     } catch (error) {
         if (error instanceof AxiosError) {
-            if (error.response?.status === 400) {
-                throw new Error("Invalid credentials");
+            if (error.code === AxiosError.ERR_BAD_REQUEST) {
+                return {
+                    loginError: "Invalid email or password",
+                }
             }
+            if (error.code === AxiosError.ECONNABORTED) {
+                return {
+                    loginError: "Connection error. Please try again later.",
+                }
+            }
+            throw error;
         }
-        throw new Error("Unknown error while logging in. Please try again later.");
+        return {
+            loginError: "Unknown error while logging in. Please try again later.",
+        }
     }
 }
 
+export async function loader() {
+    return null
+}
+
 function Login() {
-  return (
+    const actionData = useActionData() as { loginError: string };
+    const loginError = actionData?.loginError ?? "";
+
+    return (
     <div className={styles.background}>
         <Form action="/login" method="POST" className={styles.loginForm}>
             <h2>Bem vindo</h2>
@@ -52,9 +69,12 @@ function Login() {
                 />
             </label>
 
+            {loginError && (
+                <div className={styles.errorMessage}>{loginError}</div>
+            )}
+
             <button type="submit">Login</button>
         </Form>
-        <Outlet />
     </div>
   )
 }
