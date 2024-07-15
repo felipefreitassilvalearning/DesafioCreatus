@@ -8,12 +8,17 @@ export const api = axios.create({
 });
 
 export async function request<T, D>(options: AxiosRequestConfig<D>): Promise<T> {
-    if (!options.headers) {
-        const userToken = getToken();
-        if (userToken) {
-            options.headers = {
-                Authorization: `Bearer ${userToken}`,
-            };
+    const userToken = getToken();
+    if (userToken) {
+        const authHeaders = {
+            Authorization: `Bearer ${userToken}`,
+        };
+        if (!options.headers) {
+            options.headers = authHeaders;
+        } else {
+            if (!options.headers.Authorization) {
+                options.headers.Authorization = authHeaders.Authorization;
+            }
         }
     }
     try {
