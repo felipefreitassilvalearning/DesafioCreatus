@@ -19,6 +19,7 @@ export async function loader({ request }: { request: Request; }) {
     } catch (error) {
         return redirect("/login");
     }
+
     const url = new URL(request.url);
     const query = url.searchParams.get("query");
     const orderBy = url.searchParams.get("orderBy") as keyof User | null;

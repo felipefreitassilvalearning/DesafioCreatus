@@ -30,24 +30,24 @@ function Router() {
             loader: usersLoader,
             errorElement: <NavigationError />,
             children: [
-            {
-                path: "create",
-                element: <UserCreate />,
-                action: createUserAction,
-            },
-            {
-                path: ":userId/edit",
-                element: <UserEdit />,
-                loader: userEditLoader as any,
-                action: userEditAction as any,
-            },
-            {
-                path: ":userId/delete",
-                element: <></>,
-                action: userDeleteAction as any,
-                errorElement: <div>UserDeleteError</div>
-            },
-        ],
+                {
+                    path: "create",
+                    element: <UserCreate />,
+                    action: createUserAction,
+                },
+                {
+                    path: ":userId/edit",
+                    element: <UserEdit />,
+                    loader: userEditLoader as any,
+                    action: userEditAction as any,
+                },
+                {
+                    path: ":userId/delete",
+                    element: <></>,
+                    action: userDeleteAction as any,
+                    errorElement: <div>UserDeleteError</div>
+                },
+            ],
         },
         {
             path: "/users/:userId/profile",

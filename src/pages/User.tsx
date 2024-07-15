@@ -1,11 +1,23 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { redirect, useLoaderData, useNavigate } from "react-router-dom";
 
 import styles from './User.module.scss'
+import { authenticate } from "../api/auth";
 import { readUser } from "../api/users";
+import { getToken } from "../tokenHelper";
 import { User as IUser } from "../types/users";
 
 
 export async function loader({ params }: { params: { userId: string } }) {
+    const userToken = getToken();
+    if (!userToken) {
+        return redirect("/login");
+    }
+    try {
+        await authenticate(userToken);
+    } catch (error) {
+        return redirect("/login");
+    }
+
     const user = await readUser(params.userId);
     if (!user) {
         throw new Response("", {
