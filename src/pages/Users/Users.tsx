@@ -1,31 +1,11 @@
 import { useEffect } from "react"
-import { Form, Outlet, redirect, useLoaderData, useNavigate, useNavigation, useSubmit } from "react-router-dom"
+import { Form, Outlet, useLoaderData, useNavigate, useNavigation, useSubmit } from "react-router-dom"
 
 import styles from "./Users.module.scss"
-import { authenticate } from "../api/auth"
-import { readUsers } from "../api/users"
-import { getToken, removeToken } from "../tokenHelper"
-import { User } from "../types/users"
-import UserDelete from "./UserDelete"
+import { removeToken } from "../../tokenHelper"
+import { User } from "../../types/users"
+import UserDelete from "../UserDelete"
 
-
-export async function loader({ request }: { request: Request; }) {
-    const userToken = getToken();
-    if (!userToken) {
-        return redirect("/login");
-    }
-    try {
-        await authenticate(userToken);
-    } catch (error) {
-        return redirect("/login");
-    }
-
-    const url = new URL(request.url);
-    const query = url.searchParams.get("query");
-    const orderBy = url.searchParams.get("orderBy") as keyof User | null;
-    const users = await readUsers(query, orderBy);
-    return { users, query, orderBy };
-}
 
 function Users() {
     const { users, query, orderBy } = useLoaderData() as {
