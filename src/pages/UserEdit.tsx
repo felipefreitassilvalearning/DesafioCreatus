@@ -64,12 +64,27 @@ function UserEdit() {
 
                 <label htmlFor="name">
                     Nome
-                    <input type="text" id="name" name="name" defaultValue={user?.name} />
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        defaultValue={user?.name}
+                        minLength={1}
+                        maxLength={255}
+                    />
                 </label>
                 
                 <label htmlFor="email">
                     Email
-                    <input type="email" id="email" name="email" defaultValue={user?.email} />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        defaultValue={user?.email}
+                        minLength={1}
+                        maxLength={255}
+                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    />
                 </label>
                 
                 <label htmlFor="accessLevel">

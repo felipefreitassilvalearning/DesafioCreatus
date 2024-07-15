@@ -49,8 +49,6 @@ function Login() {
                     name="password"
                     placeholder="Senha"
                     required
-                    minLength={6}
-                    title="A senha deve ter no mínimo 6 caracteres"
                 />
             </label>
 

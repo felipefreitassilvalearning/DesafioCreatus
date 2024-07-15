@@ -44,23 +44,47 @@ function UserCreate() {
             }}
         >
             <Form method='POST' id='user-create-form' className={styles.userModalForm}>
-                <button className={styles.closeModal} onClick={closeModal}>X</button>
+                <button
+                    className={styles.closeModal}
+                    onClick={closeModal}
+                >
+                    &times;
+                </button>
 
                 <h2>Criar Usuário</h2>
 
                 <label htmlFor="name">
                     Nome
-                    <input type="text" id="name" name="name" />
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        minLength={1}
+                        maxLength={255}
+                    />
                 </label>
                 
                 <label htmlFor="email">
                     Email
-                    <input type="email" id="email" name="email" />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        minLength={1}
+                        maxLength={255}
+                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                    />
                 </label>
                 
                 <label htmlFor="accessLevel">
                     Nível de Acesso
-                    <select id="accessLevel" name="accessLevel">
+                    <select
+                        id="accessLevel"
+                        name="accessLevel"
+                        required
+                    >
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -71,12 +95,22 @@ function UserCreate() {
                 
                 <label htmlFor="password">
                     Senha
-                    <input type="password" id="password" name="password" />
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                    />
                 </label>
                 
                 <label htmlFor="confirmPassword">
                     Confirmar Senha
-                    <input type="password" id="confirmPassword" name="confirmPassword" />
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        required
+                    />
                 </label>
 
                 <button type="submit">Criar</button>
