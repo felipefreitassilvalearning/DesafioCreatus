@@ -26,6 +26,9 @@ The following tools were used in the construction of the project:
 ## Notes
 
 - The project was developed based on the layout provided in Figma
+- The project includes Github Actions with two workflows:
+  - One for linting
+  - Another for building and deploying the project to Github Pages
 
 ### New Features
 
