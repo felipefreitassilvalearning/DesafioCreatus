@@ -1,36 +1,9 @@
 import { useState } from 'react';
 import Modal from 'react-modal'
-import { Form, redirect, useLoaderData, useNavigate } from 'react-router-dom'
+import { Form, useLoaderData, useNavigate } from 'react-router-dom'
 
-import styles from './UserModal.module.scss'
-import { readUser, updateUser } from '../api/users';
-import { UserCreate as IUserCreate, User, UserId } from '../types/users';
-
-
-type UserEditParams = {
-    params: {
-        userId: UserId;
-    }
-}
-
-export async function action({ request, params }: { request: Request; } & UserEditParams) {
-    const formData = await request.formData();
-    // type UserEditFormData = IUserCreate & { confirmPassword?: string };
-    const updatedUser = Object.fromEntries(formData) as unknown as IUserCreate;
-    // if (updatedUser.password !== updatedUser.confirmPassword) {
-    //     throw new Error('As senhas não conferem');
-    // }
-    // delete updatedUser.confirmPassword;
-    // TODO: Password should be opitonal when editing, as we don't want to update it if it's empty and we don't know the previous password
-    updatedUser.password = updatedUser.password ?? "changedByEdit";
-    await updateUser(params.userId, updatedUser);
-    return redirect('/users');
-}
-
-export async function loader({ params }: UserEditParams) {
-    const user = await readUser(params.userId);
-    return { user };
-}
+import styles from '../UserModal.module.scss'
+import { User } from '../../types/users';
 
 function UserEdit() {
     const { user } = useLoaderData() as { user: User };
