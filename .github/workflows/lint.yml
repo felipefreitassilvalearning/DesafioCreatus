@@ -27,4 +27,4 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           eslint: true
-          args: '--fix --ext .ts,.tsx'
+          eslint_args: '--fix --ext .ts,.tsx'
