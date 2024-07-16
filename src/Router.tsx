@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 import NavigationError from "./pages/NavigationError"
-import Page404, { loader as page404Loader } from "./pages/Page404"
+import Page404 from "./pages/Page404/Page404"
+import { loader as page404Loader } from "./pages/Page404/actionLoader"
 import Login from "./pages/Login/Login"
 import { loader as loginLoader, action as loginAction } from "./pages/Login/actionLoader"
 import Users from "./pages/Users/Users"
