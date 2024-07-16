@@ -1,6 +1,6 @@
 import { Form, useActionData } from "react-router-dom";
 
-import styles from "./Login.module.css";
+import styles from "./Login.module.scss";
 
 
 function Login() {
