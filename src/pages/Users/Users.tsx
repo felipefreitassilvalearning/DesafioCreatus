@@ -170,7 +170,7 @@ function Users() {
                 title="Sair"
                 onClick={logout}
             >
-                <img src="/public/exitDoor.png" alt="Sair" />
+                <img src="/exitDoor.png" alt="Sair" />
             </button>
         </>
     )
