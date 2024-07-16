@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-import { getToken } from "../../tokenHelper";
+import { getToken } from "../../utils/tokenHelper";
 import { authenticate } from "../../api/auth";
 import { readUsers } from "../../api/users";
 import { User } from "../../types/users";

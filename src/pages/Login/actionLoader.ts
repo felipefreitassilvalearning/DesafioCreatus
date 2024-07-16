@@ -3,7 +3,7 @@ import { redirect } from "react-router-dom";
 
 import { login } from "../../api/auth";
 import { LoginCredentials } from "../../types/auth";
-import { saveToken } from "../../tokenHelper";
+import { saveToken } from "../../utils/tokenHelper";
 
 
 export async function action({ request }: { request: Request }) {

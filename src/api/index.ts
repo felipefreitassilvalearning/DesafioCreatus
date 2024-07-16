@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { getToken } from "../tokenHelper";
+import { getToken } from "../utils/tokenHelper";
 
 
 export const api = axios.create({

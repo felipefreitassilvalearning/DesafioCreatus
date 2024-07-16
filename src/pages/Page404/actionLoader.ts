@@ -1,5 +1,5 @@
 import { authenticate } from "../../api/auth";
-import { getToken } from "../../tokenHelper"
+import { getToken } from "../../utils/tokenHelper"
 
 
 export async function loader() {

@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Form, Outlet, useLoaderData, useNavigate, useNavigation, useSubmit } from "react-router-dom"
 
 import styles from "./Users.module.scss"
-import { removeToken } from "../../tokenHelper"
+import { removeToken } from "../../utils/tokenHelper"
 import { User } from "../../types/users"
 import UserDelete from "../UserDelete/UserDelete"
 

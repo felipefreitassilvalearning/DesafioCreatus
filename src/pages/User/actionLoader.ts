@@ -2,7 +2,7 @@ import { redirect } from "react-router-dom";
 
 import { authenticate } from "../../api/auth";
 import { readUser } from "../../api/users";
-import { getToken } from "../../tokenHelper";
+import { getToken } from "../../utils/tokenHelper";
 
 
 export async function loader({ params }: { params: { userId: string } }) {
