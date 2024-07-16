@@ -11,7 +11,7 @@ import UserCreate from "./pages/UserCreate/UserCreate"
 import { action as createUserAction } from "./pages/UserCreate/actionLoader"
 import UserEdit from "./pages/UserEdit/UserEdit"
 import { loader as userEditLoader, action as userEditAction } from "./pages/UserEdit/actionLoader"
-import { action as userDeleteAction } from "./pages/UserDelete"
+import { action as userDeleteAction } from "./pages/UserDelete/actionLoader"
 
 
 // TODO: Improve these unknown and make them match with react router dom types

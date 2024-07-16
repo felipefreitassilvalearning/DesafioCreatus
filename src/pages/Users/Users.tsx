@@ -4,7 +4,7 @@ import { Form, Outlet, useLoaderData, useNavigate, useNavigation, useSubmit } fr
 import styles from "./Users.module.scss"
 import { removeToken } from "../../tokenHelper"
 import { User } from "../../types/users"
-import UserDelete from "../UserDelete"
+import UserDelete from "../UserDelete/UserDelete"
 
 
 function Users() {

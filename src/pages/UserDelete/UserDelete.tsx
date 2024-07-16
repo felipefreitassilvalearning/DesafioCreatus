@@ -1,14 +1,8 @@
 import { FormEvent } from "react"
-import { Form, redirect } from "react-router-dom"
+import { Form } from "react-router-dom"
 
-import { deleteUser } from "../api/users"
-import { UserId } from "../types/users"
+import { UserId } from "../../types/users"
 
-
-export async function action({ params }: { params: { userId: string } }) {
-  await deleteUser(params.userId)
-  return redirect("/users")
-}
 
 interface UserDeleteProps {
   userId: UserId
