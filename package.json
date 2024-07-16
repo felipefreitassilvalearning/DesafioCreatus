@@ -1,8 +1,15 @@
 {
   "name": "desafiocreatus",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "private": false,
   "type": "module",
+  "description": "Desafio Processo Seletivo Creatus 2024",
+  "author": "Felipe Freitas Silva",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/felipefreitassilvalearning/DesafioCreatus.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
